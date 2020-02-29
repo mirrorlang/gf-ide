@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+    <script>
+        var node = {
+            firstName: "John",
+            lastName: "Doe",
+            age: 50,
+            arr:[1,2,3,4,5,6],
+            eyeColor: "blue",
+            q: {
+                firstName: "John",
+                lastName: "Doe",
+                age: 50,
+                eyeColor: "blue",
+            },
+        };
+        $(document).ready(function () {
+            let maxsize=500
+            viz(document.getElementById("c"),maxsize,node);
+        });
+  
+        function viz(d,size,p){
+           
+            let cnt=1
+            if(Array.isArray(p)){
+                    $(d).append("[");            
+                }else{
+                    $(d).append("{");
+
+            }
+            var container = document.createElement("div");
+            
+            for (var i in p) {
+                var child = document.createElement("div");
+                $(child).addClass('array');
+                if(Array.isArray(p)){
+                    $(child).append("&nbsp;");
+                }else{
+                    let name=$("<div></div>").text(i);
+                    $(name).addClass("name");
+                    $(child).append(name);
+                }
+                
+                switch(typeof(p[i])){
+                    case "object":
+                        let dom = document.createElement("div");
+                        viz(dom,size/cnt,p[i]);
+                        $(child).append(dom);
+                        break;
+                    default:
+                        let value=$("<div></div>").text(p[i])
+                        $(child).append(value);
+                        break;
+                } 
+                $(container).append(child);    
+                cnt++           
+            }
+            if(Array.isArray(p)){                
+                    $(container).addClass('array');
+                }else{           
+                    $(container).addClass('object');
+            }
+            
+            $(d).append(container);
+            $(d).addClass('array');
+           
+            if(Array.isArray(p)){
+                    $(container).css('font-size', size);
+                    $(d).css('font-size',size);
+                    $(d).append("]");
+                }else{
+                    $(container).css('font-size', size/cnt);
+                    $(d).css('font-size',size);
+                    $(d).append("}");
+            }
+           
+        }
+    </script>
+</head>
+
+<body>
+    <style>
+        .object{
+            display: flex;
+            flex-direction:column;
+            flex-wrap: nowrap; 
+            justify-content:center;
+            align-items:center;
+          }
+
+        .array{
+            display: flex;
+            width: 100%;
+            flex-direction:row;
+            flex-wrap: nowrap; 
+            justify-content:space-between;
+            align-items:center;
+          }
+
+        .name{
+            overflow: hidden;
+            display: flex;
+        }
+
+    </style>
+    <div id="c"></div>
+</body>
+
+</html>
