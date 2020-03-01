@@ -35,7 +35,9 @@
 
             }
             var container = document.createElement("div");
-            
+            for (var i in p) {             
+                cnt++           
+            }
             for (var i in p) {
                 var child = document.createElement("div");
                 $(child).addClass('array');
@@ -58,8 +60,7 @@
                         $(child).append(value);
                         break;
                 } 
-                $(container).append(child);    
-                cnt++           
+                $(container).append(child);                    
             }
             if(Array.isArray(p)){                
                     $(container).addClass('array');
@@ -109,7 +110,7 @@
         }
 
     </style>
-    <div id="c"></div>
+    <svg id="c"></svg>
 </body>
 
 </html>
